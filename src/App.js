@@ -28,35 +28,25 @@ class App extends React.Component {
     }
   }
 
-  toggleItem = clickedId => {
+  toggleItem = id => {
     const newToDo = this.state.toDoList.map( item => {
-      if (item.id === clickedId) {
-        return {
-          ...item,
-          completed: !item.completed
-        };
+      if (item.id === id) {
+        item.completed = !item.completed;
+        return item
       } else {
         return item;
       }
     });
 
-    this.setState({
-      toDoList: newToDo
-    });
+    this.setState({newToDo});
   }
 
     removeCompleted = () => {
-     const newToDo = this.state.toDoList.filter( todo => !todo.completed)
-
-     this.setState({
-       toDoList: newToDo
-     })
+        const newTask = this.state.toDoList.filter( item => !item.completed)
+        this.setState({
+          toDoList: newTask
+        }) 
     }
-
-    // clearCompleted = e => {
-    //   e.preventDefault();
-    //   this.props.removeCompleted();
-    // }
 
     addNewItem = itemText => {
       const newItem = {
@@ -90,12 +80,12 @@ class App extends React.Component {
         addNewItem={this.addNewItem} 
         handleChanges={this.handleChanges}
         handleSubmit={this.handleSubmit}
-        removeCompleted={this.removeCompleted}
         />
         </div>
         <ToDoList
           toDo={this.state.toDoList}
           toggleItem={this.toggleItem}
+          removeCompleted={this.removeCompleted}
           />
       </div>
     );
